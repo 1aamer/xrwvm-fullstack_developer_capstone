@@ -9,7 +9,7 @@ on:
 jobs:
   lint_python:
     name: Lint Python Files
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
 
@@ -38,14 +38,14 @@ jobs:
 
   lint_js:
       name: Lint JavaScript Files
-      runs-on: ubuntu-20.04
+      runs-on: ubuntu-latest
 
       steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 14
 
