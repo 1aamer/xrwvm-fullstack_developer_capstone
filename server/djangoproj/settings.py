@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'https://u3amer111-8000.theiadockernext' +
+    'https://u3amer111-8000.theiadockernext' + 
     '-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 CSRF_TRUSTED_ORIGINS = [
@@ -98,8 +98,8 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password'
-        + '_validation.UserAttributeSimilarityValidator',
+        'django.contrib.auth.password' +
+        '_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME':
