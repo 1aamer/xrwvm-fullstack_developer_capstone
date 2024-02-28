@@ -4,19 +4,20 @@ from datetime import datetime
 import json
 from django.views.decorators.csrf import csrf_exempt
 from .populate import initiate
-from .restapis import get_request, analyze_review_sentiments, post_review
+from .restapis import (
+    get_request, analyze_review_sentiments, post_review
+)
 import logging
-
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth import logout
-from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.http import (
+    HttpResponseRedirect, HttpResponse
+)
+from django.shortcuts import (
+    get_object_or_404, render, redirect
+)
+from django.contrib.auth import logout, login, authenticate
 from .models import CarMake, CarModel
 
 logger = logging.getLogger(__name__)
-
-# Create your views here.
 
 @csrf_exempt
 def login_user(request):
@@ -51,7 +52,10 @@ def registration(request):
         logger.debug("{} is new user".format(username))
 
     if not username_exist:
-        user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name,
+            last_name=last_name, password=password, email=email
+        )
         login(request, user)
         data = {"userName": username, "status": "Authenticated"}
         return JsonResponse(data)
@@ -94,7 +98,8 @@ def get_cars(request):
     car_models = CarModel.objects.select_related('car_make')
     cars = []
     for car_model in car_models:
-        cars.append({"CarModel": car_model.name, "CarMake": car_model.car_make.name})
+        cars.append({"CarModel": car_model.name,
+                     "CarMake": car_model.car_make.name})
     return JsonResponse({"CarModels": cars})
 
 def add_review(request):
@@ -103,7 +108,7 @@ def add_review(request):
         try:
             response = post_review(data)
             return JsonResponse({"status": 200})
-        except:
+        except Exception as e:
             return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
